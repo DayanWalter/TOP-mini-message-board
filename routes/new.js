@@ -17,9 +17,7 @@ router.post('/', (req, res) => {
     return res.status(400).json({ msg: 'Please include a text and user' });
   }
   messages.push(newMessage);
-  // res.json(messages);
   res.redirect('/');
 });
 
-// 'form', { title: 'Mini Message Board', messages }
 module.exports = router;
