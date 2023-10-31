@@ -1,26 +1,34 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+var exphbs = require('express-handlebars');
+
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const createError = require('http-errors');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// Handlebars
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
+// Logger
 app.use(logger('dev'));
+
+// Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Cookie parser
 app.use(cookieParser());
+
+// Set a static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
