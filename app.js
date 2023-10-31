@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
-var exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const createError = require('http-errors');
 
 const indexRouter = require('./routes/index');
+const newRouter = require('./routes/new');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set routes
 app.use('/', indexRouter);
+app.use('/new', newRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -6,12 +6,6 @@ const messages = require('../Messages');
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Mini Message Board', messages });
 });
-
-// Gets All Messages
-// router.get('/', (req, res) => {
-//   res.json(messages);
-// });
-
 router.post('/', (req, res) => {
   const newMessage = {
     text: req.body.text,
@@ -19,9 +13,9 @@ router.post('/', (req, res) => {
     added: new Date(),
   };
 
-  // if (!newMember.name || !newMember.email) {
-  //   return res.status(400).json({ msg: 'Please include a name and email' });
-  // }
+  if (!newMessage.text || !newMessage.user) {
+    return res.status(400).json({ msg: 'Please include a text and user' });
+  }
   messages.push(newMessage);
   // res.json(messages);
   res.redirect('/');
